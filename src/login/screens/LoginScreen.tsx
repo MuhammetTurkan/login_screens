@@ -24,7 +24,8 @@ export default function LoginScreen() {
   });
 
   const textInputChange = val => {
-    if (val.trim().length >= 4) {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(val)) {
       setData({
         ...data,
         email: val,
@@ -45,12 +46,13 @@ export default function LoginScreen() {
       setData({
         ...data,
         password: val,
+        isValidPas: true,
       });
     } else {
       setData({
         ...data,
         password: val,
-        isValidPas: !data.isValidPas,
+        isValidPas: false,
       });
     }
   };
@@ -91,12 +93,7 @@ export default function LoginScreen() {
           <TextInput
             placeholder="E-posta adresiniz."
             placeholderTextColor={Colors.placeholderText}
-            style={[
-              styles.textInput,
-              {
-                color: Colors.primaryText,
-              },
-            ]}
+            style={styles.textInput}
             autoCapitalize="none"
             onChangeText={val => textInputChange(val)}
             onEndEditing={e => handleValidUser(e.nativeEvent.text)}
@@ -144,8 +141,8 @@ export default function LoginScreen() {
           <Text style={styles.forgotPasswordText}>Şifremi Unuttum</Text>
         </TouchableOpacity>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.signIn}>
-            <Text style={styles.textSign}>Giriş Yap</Text>
+          <TouchableOpacity style={styles.submit}>
+            <Text style={styles.textSubmit}>Giriş Yap</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.signUp}>
@@ -182,7 +179,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   text_footer: {
-    color: '#05375a',
+    color: Colors.footerText,
     fontSize: 18,
     marginTop: 35,
   },
@@ -190,20 +187,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     borderBottomWidth: 1,
-    borderColor: '#f2f2f2',
+    borderColor: Colors.actionBorder,
     paddingBottom: 5,
   },
   actionError: {
     flexDirection: 'row',
     marginTop: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#FF0000',
+    borderBottomColor: Colors.actionErrorBorder,
   },
   textInput: {
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 10,
-    color: '#05375a',
+    color: Colors.inputColor,
   },
   errorMsg: {
     color: '#FF0000',
@@ -213,13 +210,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 50,
   },
-  signIn: {
+  submit: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 14,
     borderWidth: 1,
-    borderColor: Colors.borderSignIn,
+    borderColor: Colors.borderSubmit,
   },
   signUp: {
     width: '100%',
@@ -230,7 +227,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 15,
   },
-  textSign: {
+  textSubmit: {
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.headerText,

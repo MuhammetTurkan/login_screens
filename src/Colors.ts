@@ -7,10 +7,17 @@ const Colors = {
   primaryText: '#000',
   headerText: '#7D8ABC',
   signUpText: '#009387',
+  backText: '#000',
   placeholderText: '#666666',
+  footerText: '#05375a',
 
+  inputColor: '#05375a',
+
+  actionBorder: '#f2f2f2',
+  actionErrorBorder: '#FF0000',
   borderSignUp: '#009387',
-  borderSignIn: '#7D8ABC',
+  borderSubmit: '#7D8ABC',
+  borderBack: '#000',
 
   iconColor: '#05375a',
 };

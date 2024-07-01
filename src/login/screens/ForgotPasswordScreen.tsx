@@ -1,4 +1,8 @@
 import React from 'react';
+
+import {RootStackParamList} from '../../navigation';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+
 import * as Animatable from 'react-native-animatable';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -14,7 +18,9 @@ import {
   Platform,
 } from 'react-native';
 
-export default function ForgotPasswordScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, 'ForgotPasswordScreen'>;
+
+export default function ForgotPasswordScreen({navigation}: Props) {
   return (
     <View style={styles.container}>
       <StatusBar
@@ -39,7 +45,9 @@ export default function ForgotPasswordScreen() {
           <TouchableOpacity style={styles.submit}>
             <Text style={styles.textSubmit}>Gönder</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.back}>
+          <TouchableOpacity
+            style={styles.back}
+            onPress={() => navigation.goBack()}>
             <Text style={styles.textBack}>Back</Text>
           </TouchableOpacity>
         </View>

@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import {RootStackParamList} from '../../navigation';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+
 import {
   View,
   Text,
@@ -13,7 +16,9 @@ import Feather from 'react-native-vector-icons/Feather';
 
 import Colors from '../../Colors';
 
-export default function LoginScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
+
+export default function LoginScreen({navigation}: Props) {
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -137,7 +142,8 @@ export default function LoginScreen() {
             </Text>
           </Animatable.View>
         )}
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.push('ForgotPasswordScreen')}>
           <Text style={styles.forgotPasswordText}>Şifremi Unuttum</Text>
         </TouchableOpacity>
         <View style={styles.button}>

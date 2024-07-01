@@ -6,11 +6,11 @@
  */
 
 import React from 'react';
-import {View} from 'react-native';
 import LoginScreen from './login/screens/LoginScreen';
+import ForgotPasswordScreen from './login/screens/ForgotPasswordScreen';
 
 function App(): React.JSX.Element {
-  return <LoginScreen />;
+  return <ForgotPasswordScreen />;
 }
 
 export default App;

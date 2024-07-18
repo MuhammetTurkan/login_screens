@@ -151,9 +151,9 @@ export default function LoginScreen({navigation}: Props) {
             <Text style={styles.textSubmit}>Giriş Yap</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.signUp}>
+          {/*   <TouchableOpacity style={styles.signUp}>
             <Text style={styles.signUpText}>Üye Ol</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </Animatable.View>
     </View>

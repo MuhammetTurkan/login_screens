@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {RootStackParamList} from '../../navigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -21,6 +21,20 @@ import {
 type Props = NativeStackScreenProps<RootStackParamList, 'ForgotPasswordScreen'>;
 
 export default function ForgotPasswordScreen({navigation}: Props) {
+  const [email, setEmail] = useState<string>('');
+  const [isValidEmail, setValidEmail] = useState<boolean>(false);
+
+  const emailChange = val => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(val)) {
+      setEmail(val);
+      setValidEmail(true);
+    } else {
+      setEmail(val);
+      setValidEmail(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -39,8 +53,21 @@ export default function ForgotPasswordScreen({navigation}: Props) {
             placeholderTextColor={Colors.placeholderText}
             style={styles.textInput}
             autoCapitalize="none"
+            onChangeText={val => emailChange(val)}
           />
+          {isValidEmail ? (
+            <Animatable.View animation={'bounceIn'}>
+              <Feather name="check-circle" color="green" size={20} />
+            </Animatable.View>
+          ) : null}
         </View>
+        {!isValidEmail && email.length != 0 && (
+          <Animatable.View animation={'fadeInLeft'} duration={500}>
+            <Text style={styles.errorMsg}>
+              Lütfen geçerli bir E-posta giriniz.
+            </Text>
+          </Animatable.View>
+        )}
         <View style={styles.button}>
           <TouchableOpacity style={styles.submit}>
             <Text style={styles.textSubmit}>Gönder</Text>
@@ -96,6 +123,10 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 10,
     color: Colors.inputColor,
+  },
+  errorMsg: {
+    color: Colors.errorText,
+    fontSize: 14,
   },
   button: {
     alignItems: 'center',

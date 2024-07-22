@@ -10,6 +10,7 @@ const Colors = {
   backText: '#000',
   placeholderText: '#666666',
   footerText: '#05375a',
+  errorText: '#FF0000',
 
   inputColor: '#05375a',
 

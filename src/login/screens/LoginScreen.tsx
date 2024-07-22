@@ -67,19 +67,6 @@ export default function LoginScreen({navigation}: Props) {
       secureTextEntry: !data.secureTextEntry,
     });
   };
-  const handleValidUser = val => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidUser: true,
-      });
-    } else {
-      setData({
-        ...data,
-        isValidUser: false,
-      });
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -101,7 +88,6 @@ export default function LoginScreen({navigation}: Props) {
             style={styles.textInput}
             autoCapitalize="none"
             onChangeText={val => textInputChange(val)}
-            onEndEditing={e => handleValidUser(e.nativeEvent.text)}
           />
           {data.check_textInputChange ? (
             <Animatable.View animation="bounceIn">
@@ -109,7 +95,7 @@ export default function LoginScreen({navigation}: Props) {
             </Animatable.View>
           ) : null}
         </View>
-        {data.isValidUser ? null : (
+        {!data.isValidUser && data.email.length != 0 && (
           <Animatable.View animation="fadeInLeft" duration={500}>
             <Text style={styles.errorMsg}>
               Lütfen geçerli bir e-posta giriniz.
@@ -209,7 +195,7 @@ const styles = StyleSheet.create({
     color: Colors.inputColor,
   },
   errorMsg: {
-    color: '#FF0000',
+    color: Colors.errorText,
     fontSize: 14,
   },
   button: {

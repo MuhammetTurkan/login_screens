@@ -14,6 +14,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {RootStackParamList} from './navigation';
 import LoginScreen from './login/screens/LoginScreen';
 import ForgotPasswordScreen from './login/screens/ForgotPasswordScreen';
+import SecureCodeScreen from './login/screens/SecureCodeScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -26,6 +27,7 @@ function App(): React.JSX.Element {
           name="ForgotPasswordScreen"
           component={ForgotPasswordScreen}
         />
+        <Stack.Screen name="SecureCodeScreen" component={SecureCodeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

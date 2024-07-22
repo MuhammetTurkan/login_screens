@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 
 import {RootStackParamList} from '../../navigation';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import * as Animatable from 'react-native-animatable';
-import Feather from 'react-native-vector-icons/Feather';
-
+import OtpInput from '../../common/OtpInput';
 import Colors from '../../Colors';
 
 import {
@@ -14,30 +13,24 @@ import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
-  TextInput,
-  Platform,
 } from 'react-native';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'ForgotPasswordScreen'>;
+type Navigation = NativeStackNavigationProp<
+  RootStackParamList,
+  'SecureCodeScreen'
+>;
 
-export default function ForgotPasswordScreen({navigation}: Props) {
-  const [email, setEmail] = useState<string>('');
-  const [isValidEmail, setValidEmail] = useState<boolean>(false);
+interface Props {
+  navigation: Navigation;
+  length: number;
+  value: Array<string>;
+  disabled: boolean;
+  onChange(value: Array<string>): void;
+}
 
-  const emailChange = val => {
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (reg.test(val)) {
-      setEmail(val);
-      setValidEmail(true);
-    } else {
-      setEmail(val);
-      setValidEmail(false);
-    }
-  };
+export default function ({navigation}: Props) {
+  const [value, setValue] = useState<Array<string>>([]);
 
-  const onSubmit = () => {
-    navigation.push('SecureCodeScreen');
-  };
   return (
     <View style={styles.container}>
       <StatusBar
@@ -46,33 +39,23 @@ export default function ForgotPasswordScreen({navigation}: Props) {
       />
       <Animatable.View animation={'fadeInUpBig'} style={styles.form}>
         <View style={styles.header}>
-          <Text style={styles.text_header}>Şifremi Unuttum!</Text>
+          <Text style={styles.text_header}>
+            E-posta adresinize gönderilen 6 haneli güvenlik kodunu giriniz!
+          </Text>
         </View>
-        <Text style={styles.text_footer}>E-Posta</Text>
         <View style={styles.action}>
-          <Feather name="mail" color={Colors.iconColor} size={20} />
-          <TextInput
-            placeholder="E-posta adresiniz"
-            placeholderTextColor={Colors.placeholderText}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val => emailChange(val)}
+          <OtpInput
+            length={6}
+            value={value}
+            onChange={valuee => {
+              setValue(valuee);
+            }}
+            disabled={false}
           />
-          {isValidEmail ? (
-            <Animatable.View animation={'bounceIn'}>
-              <Feather name="check-circle" color="green" size={20} />
-            </Animatable.View>
-          ) : null}
         </View>
-        {!isValidEmail && email.length != 0 && (
-          <Animatable.View animation={'fadeInLeft'} duration={500}>
-            <Text style={styles.errorMsg}>
-              Lütfen geçerli bir E-posta giriniz.
-            </Text>
-          </Animatable.View>
-        )}
+
         <View style={styles.button}>
-          <TouchableOpacity style={styles.submit} onPress={onSubmit}>
+          <TouchableOpacity style={styles.submit}>
             <Text style={styles.textSubmit}>Gönder</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -109,11 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 30,
   },
-  text_footer: {
-    color: Colors.footerText,
-    fontSize: 18,
-    marginTop: 35,
-  },
+
   action: {
     flexDirection: 'row',
     marginTop: 10,
@@ -121,16 +100,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: Colors.actionBorder,
   },
-  textInput: {
-    flex: 1,
-    marginTop: Platform.OS === 'ios' ? 0 : -12,
-    paddingLeft: 10,
-    color: Colors.inputColor,
-  },
-  errorMsg: {
-    color: Colors.errorText,
-    fontSize: 14,
-  },
+
   button: {
     alignItems: 'center',
     marginTop: 50,

@@ -14,6 +14,7 @@ import * as Animatable from 'react-native-animatable';
 import Feather from 'react-native-vector-icons/Feather';
 
 import LoginLayout from '../layout/LoginLayout';
+import EmailField from '../../common/EmailField';
 import Colors from '../../Colors';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
@@ -28,24 +29,6 @@ export default function LoginScreen({navigation}: Props) {
     isValidPas: true,
   });
 
-  const textInputChange = val => {
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (reg.test(val)) {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: true,
-        isValidUser: true,
-      });
-    } else {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: false,
-        isValidUser: false,
-      });
-    }
-  };
   const handlePasswordChange = val => {
     if (val.trim().length >= 8) {
       setData({
@@ -70,29 +53,12 @@ export default function LoginScreen({navigation}: Props) {
 
   return (
     <LoginLayout headerName="Giriş Yap!">
-      <Text style={styles.text_footer}>E-Posta</Text>
-      <View style={styles.action}>
-        <Feather name="mail" color={Colors.iconColor} size={20} />
-        <TextInput
-          placeholder="E-posta adresiniz."
-          placeholderTextColor={Colors.placeholderText}
-          style={styles.textInput}
-          autoCapitalize="none"
-          onChangeText={val => textInputChange(val)}
-        />
-        {data.check_textInputChange ? (
-          <Animatable.View animation="bounceIn">
-            <Feather name="check-circle" color="green" size={20} />
-          </Animatable.View>
-        ) : null}
-      </View>
-      {!data.isValidUser && data.email.length != 0 && (
-        <Animatable.View animation="fadeInLeft" duration={500}>
-          <Text style={styles.errorMsg}>
-            Lütfen geçerli bir e-posta giriniz.
-          </Text>
-        </Animatable.View>
-      )}
+      <EmailField
+        inputHeader="E-Posta"
+        onChangeText={value => {
+          data.email = value;
+        }}
+      />
       <Text style={styles.text_footer}>Şifre</Text>
       <View style={styles.action}>
         <Feather name="lock" color={Colors.primaryText} size={20} />
@@ -148,12 +114,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.actionBorder,
     paddingBottom: 5,
   },
-  actionError: {
-    flexDirection: 'row',
-    marginTop: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.actionErrorBorder,
-  },
+
   textInput: {
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : -12,

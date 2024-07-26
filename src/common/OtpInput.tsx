@@ -27,13 +27,13 @@ export default function OtpInput({length, value, disabled, onChange}: Props) {
       }
       return item;
     });
+    newValue.push(text);
     onChange(newValue);
   };
 
   const handleChange = (text: string, index: number) => {
     onChangeValue(text, index);
     if (text.length !== 0) {
-      console.log(text);
       return inputRefs?.current[index + 1]?.focus();
     }
     return inputRefs?.current[index - 1]?.focus();

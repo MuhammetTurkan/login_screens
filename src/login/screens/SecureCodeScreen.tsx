@@ -13,6 +13,7 @@ import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 
 type Navigation = NativeStackNavigationProp<
@@ -22,14 +23,18 @@ type Navigation = NativeStackNavigationProp<
 
 interface Props {
   navigation: Navigation;
-  length: number;
-  value: Array<string>;
-  disabled: boolean;
-  onChange(value: Array<string>): void;
 }
 
 export default function ({navigation}: Props) {
   const [value, setValue] = useState<Array<string>>([]);
+
+  const arrayToString = (arr: string[]) => {
+    let result = '';
+    for (let i = 0; i < arr.length; i++) {
+      result += arr[i];
+    }
+    return result;
+  };
 
   return (
     <View style={styles.container}>
@@ -55,7 +60,17 @@ export default function ({navigation}: Props) {
         </View>
 
         <View style={styles.button}>
-          <TouchableOpacity style={styles.submit}>
+          <TouchableOpacity
+            style={styles.submit}
+            onPress={() => {
+              const code = arrayToString(value);
+              Alert.alert('Güvenlik Kodu', `${code}`, [
+                {
+                  text: 'OK',
+                  onPress: () => {},
+                },
+              ]);
+            }}>
             <Text style={styles.textSubmit}>Gönder</Text>
           </TouchableOpacity>
           <TouchableOpacity

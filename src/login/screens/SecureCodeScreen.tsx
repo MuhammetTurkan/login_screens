@@ -67,7 +67,7 @@ export default function ({navigation}: Props) {
               Alert.alert('Güvenlik Kodu', `${code}`, [
                 {
                   text: 'OK',
-                  onPress: () => {},
+                  onPress: () => navigation.push('NewPasswordScreen'),
                 },
               ]);
             }}>

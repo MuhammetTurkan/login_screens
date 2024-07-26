@@ -3,18 +3,11 @@ import React, {useState} from 'react';
 import {RootStackParamList} from '../../navigation';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-import * as Animatable from 'react-native-animatable';
 import OtpInput from '../../common/OtpInput';
 import Colors from '../../Colors';
+import LoginLayout from '../layout/LoginLayout';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  StatusBar,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 
 type Navigation = NativeStackNavigationProp<
   RootStackParamList,
@@ -37,77 +30,43 @@ export default function ({navigation}: Props) {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar
-        backgroundColor={Colors.darkBackground}
-        barStyle={'light-content'}
-      />
-      <Animatable.View animation={'fadeInUpBig'} style={styles.form}>
-        <View style={styles.header}>
-          <Text style={styles.text_header}>
-            E-posta adresinize gönderilen 6 haneli güvenlik kodunu giriniz!
-          </Text>
-        </View>
-        <View style={styles.action}>
-          <OtpInput
-            length={6}
-            value={value}
-            onChange={valuee => {
-              setValue(valuee);
-            }}
-            disabled={false}
-          />
-        </View>
+    <LoginLayout headerName="E-posta adresinize gönderilen 6 haneli güvenlik kodunu giriniz!">
+      <View style={styles.action}>
+        <OtpInput
+          length={6}
+          value={value}
+          onChange={valuee => {
+            setValue(valuee);
+          }}
+          disabled={false}
+        />
+      </View>
 
-        <View style={styles.button}>
-          <TouchableOpacity
-            style={styles.submit}
-            onPress={() => {
-              const code = arrayToString(value);
-              Alert.alert('Güvenlik Kodu', `${code}`, [
-                {
-                  text: 'OK',
-                  onPress: () => navigation.push('NewPasswordScreen'),
-                },
-              ]);
-            }}>
-            <Text style={styles.textSubmit}>Gönder</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.back}
-            onPress={() => navigation.goBack()}>
-            <Text style={styles.textBack}>Back</Text>
-          </TouchableOpacity>
-        </View>
-      </Animatable.View>
-    </View>
+      <View style={styles.button}>
+        <TouchableOpacity
+          style={styles.submit}
+          onPress={() => {
+            const code = arrayToString(value);
+            Alert.alert('Güvenlik Kodu', `${code}`, [
+              {
+                text: 'TAMAM',
+                onPress: () => navigation.push('NewPasswordScreen'),
+              },
+            ]);
+          }}>
+          <Text style={styles.textSubmit}>Gönder</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.back}
+          onPress={() => navigation.goBack()}>
+          <Text style={styles.textBack}>Back</Text>
+        </TouchableOpacity>
+      </View>
+    </LoginLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primaryBackground,
-    justifyContent: 'flex-end',
-  },
-  header: {
-    paddingHorizontal: 20,
-    paddingVertical: 50,
-  },
-  form: {
-    position: 'relative',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderTopStartRadius: 50,
-    borderTopEndRadius: 50,
-    backgroundColor: Colors.formBackground,
-  },
-  text_header: {
-    color: Colors.headerText,
-    fontWeight: 'bold',
-    fontSize: 30,
-  },
-
   action: {
     flexDirection: 'row',
     marginTop: 10,

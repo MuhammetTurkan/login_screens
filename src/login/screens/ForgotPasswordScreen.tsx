@@ -7,12 +7,12 @@ import * as Animatable from 'react-native-animatable';
 import Feather from 'react-native-vector-icons/Feather';
 
 import Colors from '../../Colors';
+import LoginLayout from '../layout/LoginLayout';
 
 import {
   View,
   Text,
   StyleSheet,
-  StatusBar,
   TouchableOpacity,
   TextInput,
   Platform,
@@ -39,76 +39,45 @@ export default function ForgotPasswordScreen({navigation}: Props) {
     navigation.push('SecureCodeScreen');
   };
   return (
-    <View style={styles.container}>
-      <StatusBar
-        backgroundColor={Colors.darkBackground}
-        barStyle={'light-content'}
-      />
-      <Animatable.View animation={'fadeInUpBig'} style={styles.form}>
-        <View style={styles.header}>
-          <Text style={styles.text_header}>Şifremi Unuttum!</Text>
-        </View>
-        <Text style={styles.text_footer}>E-Posta</Text>
-        <View style={styles.action}>
-          <Feather name="mail" color={Colors.iconColor} size={20} />
-          <TextInput
-            placeholder="E-posta adresiniz"
-            placeholderTextColor={Colors.placeholderText}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val => emailChange(val)}
-          />
-          {isValidEmail ? (
-            <Animatable.View animation={'bounceIn'}>
-              <Feather name="check-circle" color="green" size={20} />
-            </Animatable.View>
-          ) : null}
-        </View>
-        {!isValidEmail && email.length != 0 && (
-          <Animatable.View animation={'fadeInLeft'} duration={500}>
-            <Text style={styles.errorMsg}>
-              Lütfen geçerli bir E-posta giriniz.
-            </Text>
+    <LoginLayout headerName="Şifremi Unuttum!">
+      <Text style={styles.text_footer}>E-Posta</Text>
+      <View style={styles.action}>
+        <Feather name="mail" color={Colors.iconColor} size={20} />
+        <TextInput
+          placeholder="E-posta adresiniz"
+          placeholderTextColor={Colors.placeholderText}
+          style={styles.textInput}
+          autoCapitalize="none"
+          onChangeText={val => emailChange(val)}
+        />
+        {isValidEmail ? (
+          <Animatable.View animation={'bounceIn'}>
+            <Feather name="check-circle" color="green" size={20} />
           </Animatable.View>
-        )}
-        <View style={styles.button}>
-          <TouchableOpacity style={styles.submit} onPress={onSubmit}>
-            <Text style={styles.textSubmit}>Gönder</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.back}
-            onPress={() => navigation.goBack()}>
-            <Text style={styles.textBack}>Back</Text>
-          </TouchableOpacity>
-        </View>
-      </Animatable.View>
-    </View>
+        ) : null}
+      </View>
+      {!isValidEmail && email.length != 0 && (
+        <Animatable.View animation={'fadeInLeft'} duration={500}>
+          <Text style={styles.errorMsg}>
+            Lütfen geçerli bir E-posta giriniz.
+          </Text>
+        </Animatable.View>
+      )}
+      <View style={styles.button}>
+        <TouchableOpacity style={styles.submit} onPress={onSubmit}>
+          <Text style={styles.textSubmit}>Gönder</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.back}
+          onPress={() => navigation.goBack()}>
+          <Text style={styles.textBack}>Back</Text>
+        </TouchableOpacity>
+      </View>
+    </LoginLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primaryBackground,
-    justifyContent: 'flex-end',
-  },
-  header: {
-    paddingHorizontal: 20,
-    paddingVertical: 50,
-  },
-  form: {
-    position: 'relative',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderTopStartRadius: 50,
-    borderTopEndRadius: 50,
-    backgroundColor: Colors.formBackground,
-  },
-  text_header: {
-    color: Colors.headerText,
-    fontWeight: 'bold',
-    fontSize: 30,
-  },
   text_footer: {
     color: Colors.footerText,
     fontSize: 18,

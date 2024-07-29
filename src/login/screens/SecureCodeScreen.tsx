@@ -6,8 +6,9 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import OtpInput from '../../common/OtpInput';
 import Colors from '../../Colors';
 import LoginLayout from '../layout/LoginLayout';
+import ButtonComponent from '../components/ButtonsComponent';
 
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
 
 type Navigation = NativeStackNavigationProp<
   RootStackParamList,
@@ -29,6 +30,18 @@ export default function ({navigation}: Props) {
     return result;
   };
 
+  const onSubmit = () => {
+    {
+      const code = arrayToString(value);
+      Alert.alert('Güvenlik Kodu', `${code}`, [
+        {
+          text: 'TAMAM',
+          onPress: () => navigation.push('NewPasswordScreen'),
+        },
+      ]);
+    }
+  };
+
   return (
     <LoginLayout headerName="E-posta adresinize gönderilen 6 haneli güvenlik kodunu giriniz!">
       <View style={styles.action}>
@@ -41,27 +54,11 @@ export default function ({navigation}: Props) {
           disabled={false}
         />
       </View>
-
-      <View style={styles.button}>
-        <TouchableOpacity
-          style={styles.submit}
-          onPress={() => {
-            const code = arrayToString(value);
-            Alert.alert('Güvenlik Kodu', `${code}`, [
-              {
-                text: 'TAMAM',
-                onPress: () => navigation.push('NewPasswordScreen'),
-              },
-            ]);
-          }}>
-          <Text style={styles.textSubmit}>Gönder</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.back}
-          onPress={() => navigation.goBack()}>
-          <Text style={styles.textBack}>Back</Text>
-        </TouchableOpacity>
-      </View>
+      <ButtonComponent
+        pathName="secure"
+        onSubmit={onSubmit}
+        onBack={() => navigation.goBack()}
+      />
     </LoginLayout>
   );
 }
@@ -73,37 +70,5 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     borderBottomWidth: 1,
     borderColor: Colors.actionBorder,
-  },
-
-  button: {
-    alignItems: 'center',
-    marginTop: 50,
-  },
-  submit: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 14,
-    borderWidth: 1,
-    borderColor: Colors.borderSubmit,
-  },
-  textSubmit: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.headerText,
-  },
-  back: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: Colors.borderBack,
-    paddingVertical: 10,
-    marginTop: 15,
-  },
-  textBack: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.backText,
   },
 });

@@ -7,6 +7,7 @@ import LoginLayout from '../layout/LoginLayout';
 import EmailField from '../../common/EmailField';
 import Colors from '../../Colors';
 import PasswordField from '../../common/PasswordField';
+import ButtonComponent from '../components/ButtonsComponent';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
@@ -55,51 +56,15 @@ export default function LoginScreen({navigation}: Props) {
       <TouchableOpacity onPress={() => navigation.push('ForgotPasswordScreen')}>
         <Text style={styles.forgotPasswordText}>Şifremi Unuttum</Text>
       </TouchableOpacity>
-      <View style={styles.button}>
-        <TouchableOpacity style={styles.submit}>
-          <Text style={styles.textSubmit}>Giriş Yap</Text>
-        </TouchableOpacity>
-
-        {/*   <TouchableOpacity style={styles.signUp}>
-            <Text style={styles.signUpText}>Üye Ol</Text>
-          </TouchableOpacity> */}
-      </View>
+      <ButtonComponent
+        pathName="login"
+        onSubmit={() => console.log('Giriş Yapıldı!')}
+      />
     </LoginLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    marginTop: 50,
-  },
-  submit: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 14,
-    borderWidth: 1,
-    borderColor: Colors.borderSubmit,
-  },
-  signUp: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: Colors.borderSignUp,
-    paddingVertical: 10,
-    borderWidth: 1,
-    marginTop: 15,
-  },
-  textSubmit: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.headerText,
-  },
-  signUpText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.signUpText,
-  },
   forgotPasswordText: {
     fontSize: 15,
     color: Colors.primaryText,

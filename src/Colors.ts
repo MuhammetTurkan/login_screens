@@ -20,7 +20,7 @@ const Colors = {
   borderSubmit: '#7D8ABC',
   borderBack: '#000',
 
-  iconColor: '#05375a',
+  iconColor: '#0d456dff',
 };
 
 export default Colors;
